@@ -3,12 +3,12 @@
 {
   environment.systemPackages = with pkgs; [
     git
-    vim
+    neovim
     wget
     brave
   ];
 
 
   virtualisation.docker.enable = true;
-  environment.variables.EDITOR = "vim";
+  environment.variables.EDITOR = "neovim";
 }
