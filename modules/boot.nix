@@ -7,7 +7,7 @@
     useOSProber = true;
   };
 
-  boot.kernelParams = [ "pci=nomsi" "clocksource=acpi_pm" ];
+  # boot.kernelParams = [ "pci=nomsi" "clocksource=acpi_pm" ];
 
   time.timeZone = "Europe/Amsterdam";
 

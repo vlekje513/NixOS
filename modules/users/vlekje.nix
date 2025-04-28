@@ -6,7 +6,15 @@
     description = "vlekje";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
-      kdePackages.kate
+      vscode
     ];
   };
+
+  services.vmwareGuest = {
+    enable = true;
+  };
+
+  environment.systemPackages = with pkgs; [
+    open-vm-tools
+  ];
 }
