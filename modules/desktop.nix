@@ -14,7 +14,7 @@
   services.printing.enable = true;
 
   services.xserver.displayManager.autoLogin = {
-    enable = true;
+    enable = false;
     user = "vlekje";
   };
 }

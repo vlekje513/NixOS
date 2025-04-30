@@ -5,7 +5,8 @@
     git
     neovim
     wget
-    brave
+    just
+
   ];
 
 

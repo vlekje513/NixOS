@@ -7,6 +7,7 @@
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       vscode
+      brave
     ];
   };
 
