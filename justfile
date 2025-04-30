@@ -13,12 +13,13 @@ uar:
   sudo cp -f home.nix /etc/nixos
   sudo cp -r -f ./modules /etc/nixos
   sudo nixos-rebuild switch --flake /etc/nixos
-  nixos-rebuild switch --flake /etc/nixos --use-remote-sudo
 
 uardebug:
   cd ~/Documents/NixOS/
   sudo cp -f flake.nix /etc/nixos
   sudo cp -f home.nix /etc/nixos
   sudo cp -r -f ./modules /etc/nixos
-  sudo nixos-rebuild switch --flake /etc/nixos
-  nixos-rebuild switch --flake /etc/nixos --use-remote-sudo --show-trace --verbose
+  sudo nixos-rebuild switch --flake /etc/nixos --show-trace --verbose
+
+relhome:
+  home-manager switch

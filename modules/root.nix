@@ -6,6 +6,7 @@
     neovim
     wget
     just
+    kdePackages.partitionmanager
 
   ];
 

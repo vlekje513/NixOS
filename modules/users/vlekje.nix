@@ -10,8 +10,8 @@
       brave
     ];
   };
-
-  services.vmwareGuest = {
+  
+  virtualisation.vmware.guest = {
     enable = true;
   };
 
