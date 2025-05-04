@@ -1,10 +1,19 @@
 { config, pkgs, ... }:
 
 {
-  boot.loader.grub = {
-    efiSupport = true;
-    device = "nodev";
+  boot.loader = {
+    efi = {
+canTouchEfiVariables = true;
+};
+systemd-boot = {
+enable = true;
+};
+    grub = {
+      efiSupport = true;
+      #device = "nodev";
+    };
   };
+  
 
   # boot.kernelParams = [ "pci=nomsi" "clocksource=acpi_pm" ];
 
