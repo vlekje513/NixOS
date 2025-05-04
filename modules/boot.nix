@@ -2,9 +2,8 @@
 
 {
   boot.loader.grub = {
-    enable = true;
-    device = "/dev/sda";
-    useOSProber = true;
+    efiSupport = true;
+    device = "nodev";
   };
 
   # boot.kernelParams = [ "pci=nomsi" "clocksource=acpi_pm" ];
