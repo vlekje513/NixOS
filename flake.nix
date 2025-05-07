@@ -20,7 +20,7 @@
         #./modules/home.nix
         ./modules/boot.nix
         ./modules/networking.nix
-        ./modules/desktop.nix
+        #./modules/desktop.nix
         ./modules/pipewire.nix
         ./modules/users/vlekje.nix
         ./modules/root.nix
