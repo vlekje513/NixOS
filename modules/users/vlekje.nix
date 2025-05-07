@@ -1,6 +1,15 @@
 { config, pkgs, ... }:
 
 {
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      nvidia-vaapi-driver
+    ];
+  };
+
+  hardware.nvidia.open = true
+  programs.hyprland.enable = true;
   users.users.vlekje = {
     isNormalUser = true;
     description = "vlekje";
