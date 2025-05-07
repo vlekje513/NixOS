@@ -8,7 +8,7 @@
     ];
   };
 
-  hardware.nvidia.open = true
+  hardware.nvidia.open = true;
   programs.hyprland.enable = true;
   users.users.vlekje = {
     isNormalUser = true;
