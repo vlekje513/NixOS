@@ -6,6 +6,9 @@
     neovim
     wget
     just
+    tree
+    tldr
+    tmux
 
   ];
 
