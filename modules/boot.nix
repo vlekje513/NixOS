@@ -3,11 +3,11 @@
 {
   boot.loader = {
     efi = {
-canTouchEfiVariables = true;
-};
-systemd-boot = {
-enable = true;
-};
+      canTouchEfiVariables = true;
+    };
+    systemd-boot = {
+      enable = true;
+    };
     grub = {
       efiSupport = true;
       #device = "nodev";
