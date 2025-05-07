@@ -13,6 +13,9 @@
       bind =
         [
           "$mod, F, exec, brave"
+          "$mod, T, exec, kitty"
+          "$mod, U, exec, echo $XDG_SESSION_TYPE"
+          "$mod, P, exit"
           ", Print, exec, grimblast copy area"
         ];
       };
