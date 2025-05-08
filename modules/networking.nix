@@ -11,7 +11,7 @@
   services.openssh = {
     enable = true;
     authorizedKeys.keys = [
-      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA5mLMzwlx+4FkB4q3dybESRH4uKYRCqVUNkZs/YL+Nj
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA5mLMzwlx+4FkB4q3dybESRH4uKYRCqVUNkZs/YL+Nj"
     ];
   };
 }
