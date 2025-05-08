@@ -7,7 +7,7 @@
   services.fail2ban = {
     enable = true;
     maxretry = 20;
-  }
+  };
   services.openssh = {
     enable = true;
     authorizedKeys.keys = [
