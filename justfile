@@ -6,7 +6,7 @@
 #
 ############################################################################
 
-uar:
+build:
   # Update And Rebuild - uar
   cd ~/Documents/NixOS/
   sudo cp -f flake.nix /etc/nixos
@@ -14,7 +14,7 @@ uar:
   sudo cp -r -f ./modules /etc/nixos
   sudo nixos-rebuild switch --flake /etc/nixos
 
-gituar:
+gitbuild:
   # Update And Rebuild - uar
   cd ~/Documents/NixOS/
   git pull
@@ -24,7 +24,7 @@ gituar:
   sudo cp -r -f ./modules /etc/nixos
   sudo nixos-rebuild switch --flake /etc/nixos
 
-uardebug:
+builddebug:
   cd ~/Documents/NixOS/
   sudo cp -f flake.nix /etc/nixos
   sudo cp -f home.nix /etc/nixos
