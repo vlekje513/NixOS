@@ -12,7 +12,7 @@
     };
 
     ragenix = {
-      url = "github:yaxfer/ragenix";
+      url = "github:yaxitech/ragenix/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
