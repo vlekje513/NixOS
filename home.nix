@@ -45,19 +45,6 @@
         layout = "dwindle"; # or master
       };
 
-      decoration = {
-        rounding = 10;
-        blur = { # Requires `programs.hyprland.nvidiaPatches = true;` on nvidia, check for VM
-            enabled = true;
-            size = 3;
-            passes = 1;
-        };
-        drop_shadow = true;
-        shadow_range = 4;
-        shadow_render_power = 3;
-        "col.shadow" = "rgba(1a1a1aee)";
-      };
-
       animations = {
         enabled = true;
         bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
@@ -74,10 +61,6 @@
       dwindle = {
         pseudotile = true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
         preserve_split = true; # you probably want this
-      };
-
-      master = {
-        new_is_master = true;
       };
 
       gestures = {
