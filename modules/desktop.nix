@@ -9,7 +9,7 @@
       wayland.enable = true;
       # theme
     };
-    displayManager.autoLogin = {
+    autoLogin = {
       enable = false;
       user = "vlekje";
     };

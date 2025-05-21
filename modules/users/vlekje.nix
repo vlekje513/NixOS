@@ -14,7 +14,7 @@
 
   programs.hyprland = {
     enable = true;
-    pkgs.hyprland;
+    package = pkgs.hyprland;
   };
 
   environment.systemPackages = with pkgs; [
