@@ -23,7 +23,7 @@
     open-vm-tools
   ];
 
-  services.dbus {
+  services.dbus = {
     enable = true;
     implementation = "broker";
   };
