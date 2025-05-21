@@ -8,42 +8,6 @@
   wayland.windowManager.hyprland = {
     enable = true;
     package = pkgs.hyprland; # Can specify package here too, but system-level is also fine
-    config = ''
-      # Monitor configuration (example, adjust to your VM's display)
-      monitor=,preferred,auto,1
-    
-      # Autostart applications (example)
-      exec-once = waybar &
-      exec-once = mako # Notification daemon
-      exec-once = ~/.config/hypr/scripts/portal.sh # Script to start xdg-desktop-portal-hyprland
-      exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    
-      # Environment variables (some can be set here too)
-      env = XCURSOR_SIZE,24
-      env = HYPRCURSOR_THEME, capitaine-cursors
-    
-      # Input settings (example)
-      input {
-          kb_layout = us
-          kb_variant =
-          kb_model =
-          kb_options =
-          kb_rules =
-    
-          follow_mouse = 1
-    
-          touchpad {
-              natural_scroll = no
-          }
-    
-          sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
-      }
-    
-      # Keybinds (your existing ones are fine, just showing structure)
-      bind = $mainMod, Q, exec, kitty
-      bind = $mainMod, C, killactive,
-      # ... more binds
-    '';
     # For more complex configs, you can source a file:
     # extraConfig = builtins.readFile ./hyprland.conf;
 
@@ -58,8 +22,8 @@
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP" # Propagate Wayland vars to D-Bus
         "systemctl --user start xdg-desktop-portal-hyprland" # Start the portal service for the user
         "systemctl --user start xdg-desktop-portal-gtk" # if needed
-        # "waybar" # Example: start Waybar if you use it
-        # "mako"   # Example: start notification daemon
+        "waybar" # Example: start Waybar if you use it
+        "mako"   # Example: start notification daemon
       ];
 
 
@@ -165,7 +129,8 @@
     # here is some command line tools I use frequently
     # feel free to add your own or remove some of them
     btop
-    grimblastwaybar
+    grimblast
+    waybar
     mako
     wlogout
     # thunar # GTK File manager

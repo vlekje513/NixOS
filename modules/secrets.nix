@@ -37,12 +37,12 @@ in
   # The name here ("wifi_M4WifiB_password") becomes part of the path where the decrypted secret is stored.
   # For example, /run/secrets/wifi_M4WifiB_password
   # The actual encrypted file should be located at ../secrets/wifi_M4WifiB_password.age
-  age.secrets.wifi_M4WifiB_password = {
-    file = ../secrets/wifi_M4WifiB_password.age; # Path to the encrypted file
-    owner = "root"; # Or a specific user if needed
-    group = "root"; # Or a specific group like "networkmanager" if it needs to read it
-    mode = "0440";  # Readable by owner and group
-  };
+  # age.secrets.wifi_M4WifiB_password = {
+  #   file = ../secrets/wifi_M4WifiB_password.age; # Path to the encrypted file
+  #   owner = "root"; # Or a specific user if needed
+  #   group = "root"; # Or a specific group like "networkmanager" if it needs to read it
+  #   mode = "0440";  # Readable by owner and group
+  # };
 
   # To make the ragenix CLI tool available on the system for encrypting new secrets:
   environment.systemPackages = [ pkgs.ragenix ];
