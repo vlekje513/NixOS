@@ -46,7 +46,7 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     noto-fonts-emoji
     font-awesome # Often used by bars/widgets
     (nerdfonts.override { fonts = [ "Hack" "JetBrainsMono" ]; }) # Example Nerd Font
