@@ -1,9 +1,15 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
-  networking.hostName = "nixos";
+  networking.hostName = "nixosvm";
   networking.networkmanager.enable = true;
+
+
   
+
+  
+  networking.firewall.enable = true;
+  networking.firewall.allowedTCPPorts = [ 22 ]; # For SSH
   services.fail2ban = {
     enable = true;
     maxretry = 20;

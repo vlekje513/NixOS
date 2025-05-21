@@ -1,50 +1,189 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
-  # TODO please change the username & home directory to your own
   home.username = "vlekje";
   home.homeDirectory = "/home/vlekje";
 
-  programs.kitty.enable = true;
+  # Hyprland configuration via home-manager
   wayland.windowManager.hyprland = {
     enable = true;
+    package = pkgs.hyprland; # Can specify package here too, but system-level is also fine
+    config = ''
+      # Monitor configuration (example, adjust to your VM's display)
+      monitor=,preferred,auto,1
+    
+      # Autostart applications (example)
+      exec-once = waybar &
+      exec-once = mako # Notification daemon
+      exec-once = ~/.config/hypr/scripts/portal.sh # Script to start xdg-desktop-portal-hyprland
+      exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+    
+      # Environment variables (some can be set here too)
+      env = XCURSOR_SIZE,24
+      env = HYPRCURSOR_THEME, capitaine-cursors
+    
+      # Input settings (example)
+      input {
+          kb_layout = us
+          kb_variant =
+          kb_model =
+          kb_options =
+          kb_rules =
+    
+          follow_mouse = 1
+    
+          touchpad {
+              natural_scroll = no
+          }
+    
+          sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+      }
+    
+      # Keybinds (your existing ones are fine, just showing structure)
+      bind = $mainMod, Q, exec, kitty
+      bind = $mainMod, C, killactive,
+      # ... more binds
+    '';
+    # For more complex configs, you can source a file:
+    # extraConfig = builtins.readFile ./hyprland.conf;
+
+    # Using the settings attribute as you were
     settings = {
-      "$mod" = "SUPER";
-      bind =
-        [
-          "$mod, F, exec, brave"
-          "$mod, T, exec, kitty"
-          "$mod, U, exec, echo $XDG_SESSION_TYPE"
-          "$mod, P, exit"
-          ", Print, exec, grimblast copy area"
+      "$mod" = "SUPER"; # Use the let-defined variable
+
+      # Recommended: Autostart XDG Desktop Portal for Hyprland if not handled by systemd user service
+      # This is often better handled by a systemd user service or a wrapper script.
+      # exec-once = "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"; # If using systemd user session
+      exec-once = [
+        "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP" # Propagate Wayland vars to D-Bus
+        "systemctl --user start xdg-desktop-portal-hyprland" # Start the portal service for the user
+        "systemctl --user start xdg-desktop-portal-gtk" # if needed
+        # "waybar" # Example: start Waybar if you use it
+        # "mako"   # Example: start notification daemon
+      ];
+
+
+      monitor = ",preferred,auto,1"; # Basic monitor config, adjust if needed
+
+      input = {
+        kb_layout = "us"; # Set your keyboard layout
+        follow_mouse = 1;
+        touchpad.natural_scroll = false;
+        sensitivity = 0.0; # Default sensitivity
+      };
+
+      general = {
+        gaps_in = 5;
+        gaps_out = 10;
+        border_size = 2;
+        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+        "col.inactive_border" = "rgba(595959aa)";
+        layout = "dwindle"; # or master
+      };
+
+      decoration = {
+        rounding = 10;
+        blur = { # Requires `programs.hyprland.nvidiaPatches = true;` on nvidia, check for VM
+            enabled = true;
+            size = 3;
+            passes = 1;
+        };
+        drop_shadow = true;
+        shadow_range = 4;
+        shadow_render_power = 3;
+        "col.shadow" = "rgba(1a1a1aee)";
+      };
+
+      animations = {
+        enabled = true;
+        bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
+        animation = [
+          "windows, 1, 7, myBezier"
+          "windowsOut, 1, 7, default, popin 80%"
+          "border, 1, 10, default"
+          "borderangle, 1, 8, default"
+          "fade, 1, 7, default"
+          "workspaces, 1, 6, default"
         ];
       };
+
+      dwindle = {
+        pseudotile = true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+        preserve_split = true; # you probably want this
+      };
+
+      master = {
+        new_is_master = true;
+      };
+
+      gestures = {
+        workspace_swipe = true;
+      };
+
+      # Example window rule:
+      # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
+      # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
+
+      bind = [
+        "$mod, RETURN, exec, kitty" # Changed T to RETURN, common for terminal
+        "$mod, F, exec, brave"
+        "$mod, Q, killactive,"
+        "$mod, M, exit," # Changed P to M for exit, P often used for other things
+        "$mod, E, exec, thunar" # Example: file manager
+        "$mod, V, togglefloating,"
+        "$mod, P, pseudo," # dwindle
+        "$mod, J, togglesplit," # dwindle
+
+        # Move focus with mainMod + arrow keys
+        "$mod, left, movefocus, l"
+        "$mod, right, movefocus, r"
+        "$mod, up, movefocus, u"
+        "$mod, down, movefocus, d"
+
+        # Switch workspaces with mainMod + [0-9]
+        "$mod, 1, workspace, 1"
+        "$mod, 2, workspace, 2"
+        "$mod, 3, workspace, 3"
+        # ... more workspaces
+
+        # Move active window to a workspace with mainMod + SHIFT + [0-9]
+        "$mod SHIFT, 1, movetoworkspace, 1"
+        "$mod SHIFT, 2, movetoworkspace, 2"
+        "$mod SHIFT, 3, movetoworkspace, 3"
+        # ... more workspaces
+
+        # Screenshots
+        ", Print, exec, grimblast copy area" # Your existing screenshot bind
+        "$mod, Print, exec, grimblast copy window"
+        "SHIFT, Print, exec, grimblast copy output"
+      ];
+    };
   };
-
-  # link the configuration file in current directory to the specified location in home directory
-  # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
-
-  # link all files in `./scripts` to `~/.config/i3/scripts`
-  # home.file.".config/i3/scripts" = {
-  #   source = ./scripts;
-  #   recursive = true;   # link recursively
-  #   executable = true;  # make all files executable
-  # };
-
-  # encode the file content in nix configuration file directly
-  # home.file.".xxx".text = ''
-  #     xxx
-  # '';
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     # here is some command line tools I use frequently
     # feel free to add your own or remove some of them
     btop
-    
+    grimblastwaybar
+    mako
+    wlogout
+    # thunar # GTK File manager
+    # capitaine-cursors # Example cursor theme
+    # hyprpicker # Color picker
   ];
 
-  # basic configuration of git, please change to your own
+  programs.kitty = {
+    enable = true;
+    # font.name = "Hack Nerd Font Mono"; # Example if you use Nerd Fonts
+    # font.size = 11;
+    # theme = "Catppuccin-Mocha"; # Example theme
+    # settings = {
+    #   scrollback_lines = 10000;
+    #   enable_audio_bell = false;
+    # };
+  };
+
   programs.git = {
     enable = true;
     userName = "vlekje513";
@@ -60,7 +199,6 @@
   # the home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "24.11";
-
   # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
 }

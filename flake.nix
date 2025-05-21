@@ -6,13 +6,22 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
 
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ragenix = {
+      url = "github:yaxfer/ragenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }: {
+  outputs = { self, nixpkgs, home-manager, ragenix, ... }: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
 
       modules = [
         ./hardware-configuration.nix
@@ -20,20 +29,18 @@
         #./modules/home.nix
         ./modules/boot.nix
         ./modules/networking.nix
-        #./modules/desktop.nix
+        ./modules/desktop.nix
         ./modules/pipewire.nix
         ./modules/users/vlekje.nix
         ./modules/root.nix
+        ./modules/secrets.nix
 
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-
-          # TODO replace ryan with your own username
           home-manager.users.vlekje = import ./home.nix;
-
-          # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+          home-manager.extraSpecialArgs = { inherit inputs; };
         }
 
       ];

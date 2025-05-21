@@ -1,20 +1,34 @@
 { config, pkgs, ... }:
 
 {
-  services.xserver.enable = true;
+  #services.xserver.enable = true;
 
-  services.displayManager.sddm.enable = true;
+  services.displayManager = {
+    sddm = {
+      enable = true;
+      wayland.enable = true;
+      # theme
+    };
+    displayManager.autoLogin = {
+      enable = false;
+      user = "vlekje";
+    };
+  };
+
+
   #services.desktopManager.plasma6.enable = true;
 
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
+  console.keyMap = "us";
 
-  services.printing.enable = true;
+  # services.xserver.xkb = {
+  #   layout = "us";
+  #   variant = "";
+  # };
 
-  services.xserver.displayManager.autoLogin = {
-    enable = false;
-    user = "vlekje";
-  };
+  # services.printing.enable = true;
+
+  # services.xserver.displayManager.autoLogin = {
+  #   enable = false;
+  #   user = "vlekje";
+  # };
 }
