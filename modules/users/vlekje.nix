@@ -23,7 +23,10 @@
     open-vm-tools
   ];
 
-  services.dbus.enable = true;
+  services.dbus {
+    enable = true;
+    implementation = "broker";
+  };
 
 
   users.users.vlekje = {
